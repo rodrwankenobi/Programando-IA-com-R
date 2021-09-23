@@ -1,0 +1,149 @@
+---
+title: "Portifólio R - MBA FIAP - Aula 2"
+author: "Rodrigo W. Ferreira"
+date: "22/09/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exercício 1
+
+### a) Criar 5 vetores com exatamente 4 elementos para cada tipo de dado:
+
+* Lógico
+* Inteiro
+* Numérico
+* Texto
+
+```{r a2ex1a}
+vetor_logico <- c(TRUE,FALSE,TRUE,FALSE)
+vetor_inteiro <- c(1,2,3,4)
+vetor_numerico <- c(0.5,1.0,1.5,2.0)
+vetor_texto <- c("This","is","a","vector")
+
+vetor_logico
+vetor_inteiro
+vetor_numerico
+vetor_texto
+```
+
+
+### b) Criar uma lista com 4 elementos. Cada elemento deve ser um vetor de 1 tipo de dado
+
+
+```{r a2ex1b}
+lista <- c(c(TRUE),c('Texto'),c(15),c(3.1))
+
+lista
+```
+
+### c) Criar uma matriz 4 x 4 com 16 números inteiros pares
+
+
+```{r a2ex1c}
+numeros_pares <- seq(1, by = 2, len = 16)
+mat = matrix(numeros_pares,nrow = 4, ncol = 4,byrow = TRUE)
+print(mat)
+```
+
+### d) Criar um data.frame em que cada coluna é um dos vetores criados neste exercício.
+
+* Nomear as colunas (a seu critério)
+* Nomear as linhas com “L1, L2, L3 e L4”
+* Veja ajuda com ?data.frame
+
+
+```{r a2ex1d}
+df <- data.frame(C1=vetor_texto, C2=vetor_numerico, C3=vetor_inteiro, C4=vetor_logico,row.names = c("L1","L2","L3","L4"))
+colnames(df) <- c("C1","C2","C3","C4")
+df
+```
+``?data.frame``
+
+## Exercício 2
+
+### a) Crie uma variável my_seq com 30 valores entre 5 
+e 10:
+
+```{r a2ex2a}
+my_seq <- seq(5,10,len=30)
+my_seq
+```
+
+
+### b) Veja o help da função `:`
+
+```{r a2ex2b, eval=FALSE}
+?`:` 
+```
+
+### c) Qual a diferença das instruções
+* pi:10
+* 10:pi
+
+```{r a2ex2c}
+pi:10
+10:pi
+```
+Resposta: O primeiro vetor criou uma sequência de pi (3.14) até 10 com incrementos de 1, porém o 10 não é atingido porque o próximo item da sequência ultrapassaria o limite 10.
+O segundo vetor inicia em 10 e decrementa uma unidade até pi, porém vai até o 4 pois o próximo item que seria 2, é menor que o limite inferior (pi).
+
+
+### d) Como consultar o tamanho do vetor my_seq
+
+
+```{r a2ex2d}
+length(my_seq)
+```
+
+### e) Como fazer uma sequencia que acompanhe o tamanho do vetor my_seq?
+
+
+```{r a2ex2e}
+my_seq2 <- seq(1,by=1,length(my_seq))
+my_seq2
+```
+
+## Exercício 3
+
+### a) Criar 5 variáveis. Cada uma com um tipo dos valores especiais (+Inf e –Inf)
+```{r a2ex3a}
+vlr_esp1 <- NA
+vlr_esp2 <- NaN
+vlr_esp3 <- Inf
+vlr_esp4 <- -Inf
+vlr_esp5 <- NULL
+```
+
+### b) Tentar criar um vetor com as 5 variáveis. Foi possível?
+```{r a2ex3b}
+vetor_var_esp <- c(vlr_esp1,vlr_esp2,vlr_esp3,vlr_esp4,vlr_esp5)
+```
+R: O R criou o vetor sem problemas
+
+### c) Verificar os valores das variáveis e vetor através das funções:
+* is.na()
+* is.nan()
+* is.null()
+* is.infinite()
+* is.finite()
+```{r a2ex3c}
+is.na(vlr_esp1)
+is.nan(vlr_esp2)
+is.null(vlr_esp5)
+is.infinite(vlr_esp3)
+is.finite(vlr_esp4)
+```
+
+## Exercício 4
+### a) Filtrar o dataset mtcars. Buscar todas as colunas dos registros cujo “mpg” seja maior ou igual a 15.
+```{r a2ex4a}
+df <- mtcars
+df[df['mpg'] >= 15]
+```
+
+
+
