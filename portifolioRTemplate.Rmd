@@ -1,0 +1,91 @@
+---
+title: "Portifólio R - MBA FIAP - Aula 3"
+author: "Rodrigo W. Ferreira"
+date: "24/09/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exercício 1
+
+### a) 
+```{r a2ex1a}
+
+```
+
+
+### b) 
+```{r a2ex1b}
+
+```
+
+### c) 
+```{r a2ex1c}
+
+```
+
+### d) 
+```{r a2ex1d}
+
+```
+
+## Exercício 2
+
+### a)
+
+```{r a2ex2a}
+
+```
+
+### b)
+```{r a2ex2b, eval=FALSE}
+ 
+```
+
+### c)
+
+```{r a2ex2c}
+
+```
+
+### d) 
+```{r a2ex2d}
+
+```
+
+### e) 
+```{r a2ex2e}
+
+```
+
+## Exercício 3
+
+### a) 
+
+```{r a2ex3a}
+
+```
+
+### b) 
+
+```{r a2ex3b}
+
+```
+
+### c) 
+
+```{r a2ex3c}
+
+```
+
+## Exercício 4
+### a) 
+```{r a2ex4a}
+
+```
+
+
+

@@ -1,0 +1,120 @@
+---
+title: "Portifólio R - MBA FIAP - Aula 3"
+author: "Rodrigo W. Ferreira"
+date: "24/09/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exercício 1
+
+### a) Fazer uma função que recebe um vetor numérico e retorna seus valores invertidos.
+ Exemplo:
+ * Entrada: 44, 67 , 5, 47, 8, 1, 79, 128
+ * Saída: 128, 79, 1, 8, 47, 5, 67, 44
+
+```{r a2ex1a}
+reverter <- function(v){
+  return(rev(v))
+}
+vetor=c(44, 67 , 5, 47, 8, 1, 79, 128)
+reverter(vetor)
+```
+
+
+### b) Fazer uma função que recebe um vetor e retorna:
+* mínimo
+* primeiro quartil
+* mediana
+* terceiro quartil
+* máximo
+
+```{r a2ex1b}
+sumarizar <- function(v){
+  return(
+    summary(v)
+  )
+}
+sumarizar(vetor)
+```
+
+## Exercício 2 - Reescreva as expressões abaixo utilizando o %>%.
+
+### a) 
+``round(mean(sum(1:10)/3), digits = 1)``
+```{r,echo=FALSE,warning=FALSE}
+library(dplyr)
+
+```
+
+```{r a2ex2a}
+mean(sum(1:10)/3) %>% round(digits = 1)
+
+```
+
+### b)
+
+``x <- rnorm(100)``
+
+``x.pos <- x[x>0]``
+
+``media <- mean(x.pos)``
+
+``saida <- round(media, 1)``
+
+``
+```{r a2ex2b, eval=FALSE}
+X <- rnorm(100)
+x.pos <- x[x > 0]
+x %>% mean() %>% round(digits=1)
+ 
+```
+
+
+## Exercício 3 - Tendo como entrada a altura e o sexo (codificadoda seguinte forma: 
+
+### * 1 - feminino 
+### * 2 - masculino
+
+### a) Construa um programa que calcule e imprima seu peso ideal, utilizando as seguintes Fórmulas: 
+#### * Para homens: (72.7 * Altura) – 58 
+#### * Para mulheres: (62.1 * Altura) – 44.7
+
+```{r a2ex3a}
+calcular_peso <- function(altura,sexo){
+  if(sexo==1){
+    return((72.7*altura)-58)
+  }
+  else if(sexo==2){
+    return((62.1*altura)-44.7)
+  }
+  else{
+    stop("Opção inválida!")
+  }
+}
+calcular_peso(1.75,2)
+
+```
+
+## Exercício 4 - Loop Acumuado
+
+### a ) Criar script que varre o dataset AirPassengers. 
+ * Observe que este dataset não é matrix, table ou data.frame, mas um TimeSeries.
+### Crie um vetor que contenha o valor acumulado de passageiros ao longo do tempo. 
+
+```{r a2ex4a}
+soma_acumulada <- 0
+passageiros <- AirPassengers
+
+for(linha in passageiros){
+  soma_acumulada <- soma_acumulada+linha
+}
+resultado <- sprintf("O total de passageiros é: %d",soma_acumulada)
+print(resultado)
+```
+
+
+
