@@ -1,0 +1,71 @@
+---
+title: "Portifólio R - MBA FIAP - Aula 4"
+author: "Rodrigo W. Ferreira"
+date: "24/09/2021"
+output: html_document
+---
+
+# Aula 4
+
+### Exercicio 1  - Criar script que varre o dataset AirPassengers
+* Observe que este dataset não é matrix, table ou data.frame, mas um TimeSeries
+* Use apply para obter valor acumulado de passageiros ao longo do tempo.
+
+```{r aula4ex1}
+df=data.frame(AirPassengers)
+
+soma_acumulada <- apply(df,2,cumsum)
+print(tail(soma_acumulada,1))
+
+```
+
+### Exercício 2
+Para o cálculo da estabilidade de modelos
+estatísticos, usa-se a medida psi (population stability index), dado pela fórmula abaixo:
+$$\sum(\%volume_{col1}-\%volume_{col2})*\ln \frac{\%volume_{col1}}{\%volume_{col2}}$$
+
+### Utilize a base aleatória abaixo para:
+
+* Contruir os %volumes das safra_01 e safra_02
+* Construir uma função que calcula o psi
+* Calcular o psi
+
+``Set.seed(123)``
+
+``datapsi <- data.frame(faixamodelo = factor(1:10)``
+
+``safra01 = round(abs(rnorm(10, 20, 2)), 2)``
+
+``safra02 = round(abs(rnorm(10, 20, 2)), 2))``
+
+
+```{r aula4ex2}
+estab <- function(vol1,vol2){
+  valor <- (vol1-vol2)*log(vol1,vol2)
+  return(sum(valor))
+}
+
+set.seed(123)
+datapsi <- data.frame(faixamodelo = factor(1:10),
+safra01 = round(abs(rnorm(10, 20, 2)), 2),
+safra02 = round(abs(rnorm(10, 20, 2)), 2))
+
+
+datapsi$estab <- estab(datapsi$safra01,datapsi$safra02)
+
+datapsi$estab
+```
+
+
+### Exercício 3 - Avaliar o data.frame “airquality”
+* Exibir uma amostra com 10 linhas aleatórias
+* Lembre-se de definir a semente para obter sempre o mesmo resultado
+
+```{r aula4ex3}
+df_air <- airquality
+n <- 10
+df_air[sample(1:nrow(df_air), 10), ]
+
+```
+
+
