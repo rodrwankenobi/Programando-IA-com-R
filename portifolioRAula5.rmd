@@ -1,0 +1,90 @@
+---
+title: "portifolioRAula5"
+author: "Rodrigo W. Ferreira"
+date: "29/09/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+#Aula 5
+
+## Utilize a base imdb nos exercícios a seguir.
+
+### Exercício 1 -  Ordene os filmes em ordem crescente de ano e decrescente de receita e salve em um objeto chamado filmes_ordenados.
+
+```{r aula5ex1}
+df_imdb <- readRDS("imdb.rds")
+filmes_ordenados <- df_imdb[order(df_imdb$ano,decreasing = TRUE),]
+head(filmes_ordenados,10)
+```
+
+### Exercício 2 -  Selecione apenas as colunas titulo e orcamento e então ordene de forma decrescente pelo orcamento. 
+
+```{r aula5ex2}
+head(
+  df_imdb[order(df_imdb$orcamento,decreasing = FALSE),c("titulo","orcamento")]
+,10)
+```
+
+### Exercício 3 -  Crie um objeto chamado filmes_pb apenas com filmes preto e branco.
+
+```{r aula5ex3}
+filmes_pb <- df_imdb %>%  filter(cor == "Black and White")
+head(filmes_pb,10)
+
+```
+
+### Exercício 4 -  Crie um objeto chamado curtos_legais com filmes de 90 minutos ou menos de duração e nota no imdb maior do que 8.5.
+
+```{r aula5ex4}
+df_imdb %>% filter(duracao <=90 & nota_imdb > 8.5) %>% head(10)
+```
+
+### Exercício 5 - Crie uma coluna chamada prejuizo (orcamento - receita) e salve a nova tabela em um objeto chamado imdb_prejuizo. Em seguida, filtre apenas os filmes que deram prejuízo e ordene a tabela por ordem crescente de prejuízo.
+
+```{r aula5ex5}
+imdb_prejuizo <- df_imdb
+imdb_prejuizo$prejuizo <- (imdb_prejuizo$orcamento-imdb_prejuizo$receita)
+
+imdb_prejuizo <- imdb_prejuizo %>% filter(prejuizo > 0)
+head(imdb_prejuizo[order(imdb_prejuizo$prejuizo),],10)
+```
+
+### Exercícios 6 -  Fazendo apenas uma chamada da função mutate(), crie as seguintes colunas novas na base imdb:
+* lucro = receita - orcamento
+
+```{r aula5ex6a}
+df_lucro <- mutate(df_imdb,lucro = receita - orcamento)
+
+head(df_lucro,10)
+
+```
+
+* lucro_medio
+
+```{r aula5ex6b}
+lucro_medio <- mean(df_lucro$lucro,na.rm=TRUE)
+lucro_medio
+
+```
+
+* lucro_relativo = (lucro - lucro_medio)/lucro_medio
+
+```{r aula5ex6c}
+lucro_relativo <-  (sum(df_lucro$lucro,na.rm=TRUE) - lucro_medio)/lucro_medio
+lucro_relativo
+
+```
+
+* houve_lucro = ifelse(lucro_relativo > 0, "sim", "não")
+
+```{r aula5ex6d}
+houve_lucro <- ifelse(lucro_relativo > 0, "sim", "não")
+houve_lucro
+
+```
+
