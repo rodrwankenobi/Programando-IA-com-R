@@ -1,0 +1,42 @@
+---
+title: "portifolioRAula6"
+author: "Rodrigo W. Ferreira"
+date: "30/09/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Aula 6
+
+## Exercídio 1 
+Rode uma árvore de decisão com a base Iris do
+* Use como variável target “Species”
+
+```{r}
+
+```
+
+
+## Exercício 3
+
+Faça um modelo usando a base mtcars
+
+* Modele a variável “Mpg”
+* Carregue a base imdb
+* carregando a base
+``imdb <- readr::read_rds("imdb.rds")``
+
+Modele o orçamento usando:
+* Árvore de decisão
+* Random forest
+* Regressão Linear
+
+```{r}
+
+```
+
+
+
