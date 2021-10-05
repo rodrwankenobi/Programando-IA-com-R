@@ -7,6 +7,12 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(randomForest)
+library(rpart)
+library(dplyr)
+library(stringr)
+library(superml)
+library(tidyr)
 ```
 
 # Aula 6
@@ -15,27 +21,120 @@ knitr::opts_chunk$set(echo = TRUE)
 Rode uma árvore de decisão com a base Iris do
 * Use como variável target “Species”
 
-```{r}
+```{r ex1}
+df <- iris
 
+randomForest(Species~.,data=df)
 ```
 
 
-## Exercício 3
+## Exercício 2
 
 Faça um modelo usando a base mtcars
 
 * Modele a variável “Mpg”
-* Carregue a base imdb
-* carregando a base
+
 ``imdb <- readr::read_rds("imdb.rds")``
 
-Modele o orçamento usando:
-* Árvore de decisão
-* Random forest
-* Regressão Linear
+```{r ex2}
+df <- mtcars
+
+randomForest(mpg~.,data=df)
+```
+
+## Exercício 3
+
+* Carregue a base imdb
 
 ```{r}
+imdb <- readr::read_rds("imdb.rds")
+head(imdb,10)
+```
 
+
+### Modele o orçamento usando:
+
+#### Preparação dos dados
+
+```{r}
+dados <- imdb %>% select(-c("titulo","ator_1","ator_2","ator_3","diretor","pais","ano"))
+
+# preparando os dados para consumo pelo model
+
+# obtendo apenas os tres principais generos
+generos <- data.frame(str_split_fixed(dados$generos,"\\|",4))
+colnames(generos) <- c("genero1","genero2","genero3","genero4")
+generos <- select(generos,c("genero1","genero2","genero3"))
+
+colnames(generos) <- c("genero1","genero2","genero3")
+
+dados <- cbind(select(dados,-generos),generos)
+dados <- data.frame(dados)
+
+
+# preparando os dados para consumo pelo modelo
+
+# colunas categoricas
+dados$cor           <- as.factor(unclass(as.factor(dados$cor)))
+dados$classificacao <- as.factor(unclass(as.factor(dados$classificacao)))
+
+dados$cor           <- as.factor(unclass(as.factor(dados$cor)))
+dados$classificacao <- as.factor(unclass(as.factor(dados$classificacao)))
+
+dados$genero1       <- as.factor(unclass(as.factor(dados$genero1)))
+dados$genero2       <- as.factor(unclass(as.factor(dados$genero2)))
+dados$genero3       <- as.factor(unclass(as.factor(dados$genero3)))
+dados <- dados %>% drop_na()
+
+summary(dados)
+```
+
+
+```{r ex3a}
+executar_modelo <- function(dados,modelo){
+  #Modelando no R
+  dados[is.na(dados)]=""
+  
+  set.seed(1234)
+  index <- sample.int(nrow(dados), 0.8 * nrow(dados))
+  treino <- dados[index,]
+  teste <- dados[index,]
+  
+  mod1 <- modelo(orcamento~., data = treino)
+  
+  library(caret)
+  
+  #medindo
+  
+  teste$y <- predict(mod1, teste)
+  teste$erro <- (teste$orcamento-teste$y)
+  
+  rmse <- sqrt(sum(teste$erro^2,na.rm = TRUE))
+  return(rmse)
+}
+
+```
+
+* Árvore de decisão
+```{r}
+rmse <- executar_modelo(dados,rpart)
+rmse
+```
+
+
+* Random forest
+
+```{r ex3b}
+rmse <-executar_modelo(dados,randomForest)
+rmse
+```
+
+* Regressão Linear
+
+```{r ex3d}
+
+rmse <-executar_modelo(dados,lm)
+rmse 
 ```
 
 
